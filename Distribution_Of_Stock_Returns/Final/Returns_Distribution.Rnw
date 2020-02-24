@@ -1,0 +1,478 @@
+\documentclass[utf8]{beamer}
+\mode<presentation> {
+	\usetheme{Warsaw}
+	\usecolortheme{rose}
+	%\setbeamertemplate{footline}
+	\setbeamertemplate{headline}
+}
+
+\usepackage{hyperref}
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title[Short title]{Distribution of Stock Returns} % The short title appears at the bottom of every slide, the full title is only on the title page
+
+\author{Panko A.S, Yakimchyk N.S, Kurennoi I.I, Agafonov N.S}
+\institute[UCLA] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{
+	Vienna University of Economics and Business  \\ % Your institution for the title page
+}
+\date{\today} % Date, can be changed to a custom date
+
+
+\newenvironment<>{varblock}[2][.9\textwidth]{%
+  \setlength{\textwidth}{#1}
+  \begin{actionenv}#3%
+    \def\insertblocktitle{#2}%
+    \par%
+    \usebeamertemplate{block begin}}
+  {\par%
+    \usebeamertemplate{block end}%
+  \end{actionenv}}
+
+
+
+
+\begin{document}
+
+
+% Slide 1
+\begin{frame}
+	\titlepage
+\end{frame}
+
+
+% Slide 2
+\begin{frame}
+\frametitle{Overview} % Table of contents slide, comment this block out to remove it
+\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+\end{frame}
+
+
+
+\section{Objectives}
+
+% Slide 3
+\begin{frame}
+  \frametitle{Objective}
+  
+    \graphicspath{ {} }
+  \begin{figure}[t]
+    \centering
+    \includegraphics[scale=0.3]{why}
+  \end{figure}
+  \begin{block}{Importance of normality}
+  \begin{itemize}
+  \item It is a common assumption that stock returns have normal distribution.
+  \item The use of normal distribution in financial models is a convenient simplification, as it allows the application of a multitude of mathematical and statistical methods.
+  \item Ex. Normal Distribution of Returns is one of the Black-Scholes Model Assumptions.
+  \end{itemize}
+  \end{block}
+    
+\end{frame}
+
+\section{Metodology}
+
+\subsection{Data}
+% Slide 4
+\begin{frame}
+  \frametitle{Dow Jones Industrial Average}
+
+  \begin{block}{What is DJIA?}
+   \begin{itemize}
+      \item Dow Jones Industrial Average is a stock market index of 30 major publicly     owned companies based in the United States.
+      \item The index is calculated as $ \frac{\sum{p}}{d} $, where p are the prices of the component stocks and d is the Dow Divisor(constant = 0.14523396877348) and used as indicator of the market performance.
+  \end{itemize}
+  \end{block}
+
+     \begin{block}{Source of data}
+        The data represents:
+        \begin{itemize}
+        	\item  30 stocks in the Dow Jones Industrial Average for the past 10 years.
+          \item Source: Yahoo Finance
+          \item Link: \url{https://finance.yahoo.com/}
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+
+\subsection{Jarque-Bera test}
+
+% Slide 5
+\begin{frame}
+\frametitle{Normality tests}
+
+  \begin{figure}[t]
+    \centering
+    \includegraphics[width=1\textwidth, height = 0.1\textwidth]{choice}
+  \end{figure}
+  
+\begin{block}{You have choice}
+There are several normality tests, such as:
+\begin{itemize}
+\item Kolmogorov-Smirnov:
+  \begin{itemize}
+  \item Not sensitive to problems in the tails.
+  \item For data sets $>$ 50.
+  \end{itemize}
+\end{itemize}
+
+\begin{itemize}
+\item Shapiro-Wilks:
+  \begin{itemize}
+  \item Doesn't work well if several values in the data set are the same.
+  \item Works best for data sets with $<$ 50, but can be used with larger
+      data sets.
+  \end{itemize}
+\end{itemize}
+
+\begin{itemize}
+\item Jarque-Bera:
+  \begin{itemize}
+  \item Tests for skewness and kurtosis, very effective.
+  \end{itemize}
+\end{itemize}
+
+\end{block}
+\end{frame}
+
+
+% Slide 6
+\begin{frame}
+\frametitle{Jarque-Bera test}
+
+\begin{block}{Core idea}
+The test uses skewness $\widehat {S}$ and kurtosis $\widehat {K}$ to check next hypothesis:
+
+\begin{tabular}{cl}  
+  \begin{tabular}{c}
+      \includegraphics[width=0.3\textwidth, height = 0.2\textwidth]{xi0}
+  \end{tabular}
+      & \begin{tabular}{l}
+             \parbox{0.5\linewidth}
+    {
+    
+$$ JB=n\left[ \dfrac {\widehat {S^{2}}}{6}+\dfrac {\left( \widehat {K}-3\right) ^{2}}{24}\right] \stackrel{H_{0}}{\sim} \chi ^{2}_{2}, $$
+             
+    }
+    
+  \end{tabular}  \\
+\end{tabular}
+
+where:
+\begin{itemize}
+
+\item $\mathcal{H}_{0}:\widehat {S}=0,\widehat {K}=3 \text{ vs } \mathcal{H}_{1}:\widehat {S}\neq 0,\widehat {K}\neq 3 $
+\item $\widehat {S} = \frac{1}{n} \sum_{i=1}^n \left( \frac{x_i-\bar{x}}{\sigma}\right)^3$
+\item $\widehat {K} = \frac{1}{n} \sum_{i=1}^n \left( \frac{x_i-\bar{x}}{\sigma}\right)^4$
+
+\end{itemize}
+
+\end{block}
+
+\end{frame}
+
+
+\section{Implementation}
+
+\subsection{Parsing}
+\subsection{Data Download}
+\subsection{Returns Calculation}
+\subsection{Jarque-Bera test}
+\subsection{Visualization}
+
+% Slide 7
+\begin{frame}[fragile]
+  \frametitle{Implementation}
+  \begin{tabular}{cl}  
+  \begin{tabular}{c}
+      \includegraphics[width=0.3\textwidth, height = 0.7\textwidth]{Alrogithm}
+  \end{tabular}
+      & \begin{tabular}{l}
+             \parbox{0.5\linewidth}
+    {
+    
+\begin{varblock}[7cm]{Parsing technique}
+    To get required data often we should take it from a website. Functions below solve this problem.
+    <<eval=FALSE>>=
+    tabs <- getURL(url)
+    @
+    <<eval=FALSE>>=
+    t <- readHTMLTable(tabs)
+    @
+        
+
+
+\end{varblock}
+
+\begin{varblock}[7cm]{Data Download}
+    Historical stock data can be downloaded using next function:
+    <<eval=FALSE>>=
+    getSymbols()
+    @
+
+\end{varblock}
+             
+    }
+    
+  \end{tabular}  \\
+\end{tabular}
+
+    
+
+
+\end{frame}
+
+
+% Slide 8
+\begin{frame}[fragile]
+  \frametitle{Implementation}
+  \begin{tabular}{cl}  
+  \begin{tabular}{c}
+      \includegraphics[width=0.3\textwidth, height = 0.7\textwidth]{Alrogithm}
+  \end{tabular}
+      & \begin{tabular}{l}
+             \parbox{0.5\linewidth}
+    {
+    
+\begin{varblock}[7cm]{Returns Calculations}
+    R rackage \textbf{quantmode} has poverful set of functions for calculation of period returns like \textbf{dailyReturn()}
+
+
+\end{varblock}
+
+\begin{varblock}[7cm]{Jarque-Bera test}
+    \textbf{jarque.bera.test()} is a function for required test, which is implemented in package \textbf{tseries}
+
+\end{varblock}
+
+\begin{varblock}[7cm]{Visualization}
+\begin{enumerate}
+\item \textbf{par()} function allowes combine several graphs within 1 figure
+\item \textbf{barplot()} function representing a barplot.
+\end{enumerate}
+\end{varblock}
+             
+    }
+    
+  \end{tabular}  \\
+\end{tabular}
+
+\end{frame}
+
+
+
+
+
+% Slide 8
+\section{Results}
+\begin{frame}
+  \frametitle{Results}
+Green - test passed, Red - test failed
+  % R-code section -------------------------------------------------
+<< echo=FALSE, warning = FALSE, message = FALSE, out.width = "0.8\\textwidth", out.height="0.8\\textwidth", fig.align='center'>>=
+# Task 89
+
+# Libraries
+library(XML)
+library(RCurl)
+library(lubridate)
+library(quantmod)
+library(tseries)
+library(moments)
+
+# ========================== Download Tickers =======================================
+
+get_tickers <- function(url,required_table_number,column_name){
+  # Derive a list of stocks from wikipedia page
+  tabs <- getURL(url)
+  tables <- readHTMLTable(tabs)
+  
+  # take required table
+  companies_symbols_matrix = as.matrix(tables[[required_table_number]][column_name]) 
+  
+  # Derive a list of stock symbols from a table
+  return(companies_symbols_matrix[,1])
+  
+}
+
+
+# ===================================================================================
+
+
+# ========================== Download Data =========================================
+download_1_stock_prices <- function(ticker, start_date, end_date){
+  stock_data <- getSymbols(Symbols = ticker, from = start_date, to = end_date,
+                           auto.assign = FALSE)
+  # Take adjusted close price
+  one_stock_prices <- stock_data[,6]
+
+  return(one_stock_prices)
+}
+
+download_all_stocks_prices <- function(tickers,start_date, end_date){
+  
+  all_stocks_prices <- xts()
+  
+  for(i in 1:length(tickers)){
+    one_stock_prices <- download_1_stock_prices(tickers[i], start_date = start_date,
+                                         end_date = end_date)
+
+    all_stocks_prices <- merge.xts(all_stocks_prices,one_stock_prices)
+  }
+  
+  colnames(all_stocks_prices) <- tickers
+  
+  return(na.omit(all_stocks_prices))
+}
+
+# ===================================================================================
+
+# ============================== Calculate returns ==================================
+calculate_returns <- function(all_stocks_prices, tickers, type){
+  
+  all_stocks_returns <- xts()
+  
+  for (i in 1:ncol(all_stocks_prices)) {
+    if( type == 'd'){
+      one_stock_returns <- dailyReturn(x = all_stocks_prices[,i])
+    }
+    if( type == 'w'){
+      one_stock_returns <- weeklyReturn(x = all_stocks_prices[,i])
+    }
+    if( type == 'm'){
+      one_stock_returns <- monthlyReturn(x = all_stocks_prices[,i])
+    }
+    if( type == 'q'){
+      one_stock_returns <- quarterlyReturn(x = all_stocks_prices[,i])
+    }
+    
+    all_stocks_returns <- merge.xts(all_stocks_returns, one_stock_returns)
+  }
+  
+  # the first row contains all 0
+  all_stocks_returns <- all_stocks_returns[-1]
+  colnames(all_stocks_returns) <- tickers
+  
+  return(all_stocks_returns)
+}
+# ===================================================================================
+
+# ===================== Execute Jarque - Bera test ==================================
+execute_jarque_bera_test <- function(all_stocks_returns){
+  
+  all_jb_x2 <- c(rep(0,times = ncol(all_stocks_returns) ))
+  all_jb_pvalue <- c(rep(0,times = ncol(all_stocks_returns) ))
+  all_jb_param <- c(rep(0,times = ncol(all_stocks_returns) ))
+  
+  for(i in 1:ncol(all_stocks_returns)){
+    
+    one_jb_test_results <- jarque.bera.test(all_stocks_returns[,i])
+    
+    all_jb_x2[i] <- one_jb_test_results$statistic
+    all_jb_pvalue[i] <- one_jb_test_results$p.value
+    all_jb_param[i] <- one_jb_test_results$parameter
+    
+  }
+  
+  return(list(x2 = all_jb_x2, pvalue = all_jb_pvalue, param = all_jb_param))
+  
+}
+# ===================================================================================
+
+# ========================== Visualization ==========================================
+visualize_results <- function(jb_pvalue_d, jb_pvalue_w, jb_pvalue_m, jb_pvalue_q){
+  
+  num_all <- length(jb_pvalue_d)
+  
+  num_norm_d <- sum(jb_pvalue_d > 0.05)
+  num_norm_w <- sum(jb_pvalue_w > 0.05)
+  num_norm_m <- sum(jb_pvalue_m > 0.05)
+  num_norm_q <- sum(jb_pvalue_q > 0.05)
+  
+  # Create 1 figure containing 4 graphs
+  par(mfrow=c(2,2))
+  
+  # Number of normaly distributed VS others
+  barplot(c(num_norm_d,num_all-num_norm_d), col = c('green', 'red'),
+          main = "Daily")
+  barplot(c(num_norm_w,num_all-num_norm_w), col = c('green', 'red'),
+          main = "Weekly")
+  barplot(c(num_norm_m,num_all-num_norm_m), col = c('green', 'red'),
+          main = "Monthly")
+  barplot(c(num_norm_q,num_all-num_norm_q), col = c('green', 'red'),
+          main = "Quarterly")
+  #title('Normal VS Non-normal', outer=TRUE) 
+  
+
+}
+# ===================================================================================
+
+# Main
+main <- function(){
+  
+  # Preparations
+  url <- 'https://en.wikipedia.org/wiki/Dow_Jones_Industrial_Average'
+  required_table_number <- 2
+  column_name <- 'Symbol'
+  tickers <- get_tickers(url,required_table_number,column_name)
+  end_date <- as.Date('2018-01-24')
+  start_date <- as.Date(end_date - years(10))
+  
+  # Prices
+  all_prices <- download_all_stocks_prices(tickers, start_date, end_date)
+  
+  # Returns
+  all_daily_returns <- calculate_returns(all_prices, tickers,type = 'd')
+  all_weekly_returns <- calculate_returns(all_prices, tickers,type = 'w')
+  all_monthly_returns <- calculate_returns(all_prices, tickers, type = 'm')
+  all_quarterly_returns <- calculate_returns(all_prices, tickers, type = 'q')
+  
+  
+  # Skewness
+  all_returns_skewness_d <- skewness(all_daily_returns)
+  all_returns_skewness_w <- skewness(all_weekly_returns)
+  all_returns_skewness_m <- skewness(all_monthly_returns)
+  all_returns_skewness_q <- skewness(all_quarterly_returns)
+  
+  # Kurtosis
+  all_returns_kurtosis_d <- kurtosis(all_daily_returns)
+  all_returns_kurtosis_w <- kurtosis(all_weekly_returns)
+  all_returns_kurtosis_m <- kurtosis(all_monthly_returns)
+  all_returns_kurtosis_q <- kurtosis(all_quarterly_returns)
+  
+  # Jarque-Bera test
+  all_returns_jarque_bera_d <- execute_jarque_bera_test(all_daily_returns)
+  all_returns_jarque_bera_w <- execute_jarque_bera_test(all_weekly_returns)
+  all_returns_jarque_bera_m <- execute_jarque_bera_test(all_monthly_returns)
+  all_returns_jarque_bera_q <- execute_jarque_bera_test(all_quarterly_returns)
+  
+  # Visualization
+  visualize_results(all_returns_jarque_bera_d$pvalue,
+                    all_returns_jarque_bera_w$pvalue,
+                    all_returns_jarque_bera_m$pvalue,
+                    all_returns_jarque_bera_q$pvalue)
+}
+
+main()
+
+
+
+@
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Thank you for attention!}
+  \begin{figure}[t]
+    \centering
+\includegraphics[width=0.9\textwidth, height = 0.9\textwidth]{last}
+  \end{figure}
+\end{frame}
+
+
+\end{document}
